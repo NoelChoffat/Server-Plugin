@@ -1,0 +1,37 @@
+package com.example.junkplugin;
+
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerDeathEvent;
+
+public class JunkListener implements Listener {
+
+    private final JunkManager junkManager;
+
+    public JunkListener(JunkManager junkManager) {
+        this.junkManager = junkManager;
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        // Handle interactions within junks
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        // Check if player is within a junk and handle neutralizing if needed
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        // Handle player leaving junk zone
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        // Handle player death and junk ownership transfer
+    }
+}
