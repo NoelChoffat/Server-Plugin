@@ -1,0 +1,17 @@
+package com.example.junkplugin;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class JunkPlugin extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        // Register events and commands here
+        getLogger().info("JunkPlugin enabled!");
+    }
+
+    @Override
+    public void onDisable() {
+        getLogger().info("JunkPlugin disabled!");
+    }
+}
