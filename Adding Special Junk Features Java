@@ -1,0 +1,15 @@
+// You can expand the JunkZone class to include special features and advantages
+
+
+public class ArmoryJunk extends JunkZone {
+    private final int extraDamage;
+
+    public ArmoryJunk(UUID owner, Location location, World world, int extraDamage) {
+        super(owner, location, world);
+        this.extraDamage = extraDamage;
+    }
+
+    public int getExtraDamage() {
+        return extraDamage;
+    }
+}
