@@ -1,0 +1,49 @@
+package com.example.junkplugin;
+
+import org.bukkit.Location;
+import org.bukkit.World;
+import java.util.UUID;
+
+public class JunkZone {
+    private final UUID owner;
+    private final Location location;
+    private final World world;
+    private boolean isNeutral;
+    private long creationTime;
+
+    public JunkZone(UUID owner, Location location, World world) {
+        this.owner = owner;
+        this.location = location;
+        this.world = world;
+        this.isNeutral = false;
+        this.creationTime = System.currentTimeMillis();
+    }
+
+    public UUID getOwner() {
+        return owner;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public boolean isNeutral() {
+        return isNeutral;
+    }
+
+    public void setNeutral(boolean neutral) {
+        this.isNeutral = neutral;
+    }
+
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(long creationTime) {
+        this.creationTime = creationTime;
+    }
+}
