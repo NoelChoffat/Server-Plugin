@@ -1,0 +1,20 @@
+package com.example.junkplugin;
+
+import org.bukkit.Location;
+import org.bukkit.World;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+public class JunkManager {
+    private final Map<UUID, JunkZone> junkZones = new HashMap<>();
+
+    public void addJunk(UUID owner, Location location, World world) {
+        JunkZone zone = new JunkZone(owner, location, world);
+        junkZones.put(owner, zone);
+    }
+
+    public JunkZone getJunk(UUID owner) {
+        return junkZones.get(owner);
+    }
+}
