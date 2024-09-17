@@ -1,0 +1,5 @@
+@Override
+public void onEnable() {
+    JunkManager junkManager = new JunkManager();
+    getServer().getPluginManager().registerEvents(new JunkListener(junkManager), this);
+}
