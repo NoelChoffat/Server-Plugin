@@ -50,6 +50,17 @@ public class ReadChunk implements CommandExecutor {
                 // Überprüfen, ob Welt, X und Z übereinstimmen
                 if (savedWorld.equals(worldName) && savedX == chunkX && savedZ == chunkZ) {
                     player.sendMessage("Dieser Chunk gehört " + playerName);
+
+                    //prüfen, ob es der eigene chunk ist
+                    // -------- TODO ------------------
+                    // anhand von Besitz gewisse aktionen verweigern.
+                    // -----------------------------------
+                    if (player.getName().equals(playerName)) {
+                        player.sendMessage("Dieser Chunk gehört dir!");
+                    } else {
+                        player.sendMessage("Dieser Chunk gehört *nicht* dir!");
+                    }
+
                     found = true;
                     break;
                 }
@@ -57,7 +68,7 @@ public class ReadChunk implements CommandExecutor {
 
             // Falls der Chunk keinem Spieler gehört
             if (!found) {
-                player.sendMessage("Dieser Chunk gehört niemandem.");
+                player.sendMessage("Dieser Chunk gehört niemandem. Benutze /claim, um ihn für dich zu claimen.");
             }
 
             return true;
