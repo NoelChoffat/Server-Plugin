@@ -10,6 +10,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 public class ReadChunk implements CommandExecutor {
     @Override
@@ -41,28 +43,33 @@ public class ReadChunk implements CommandExecutor {
 
             // Durch die Konfiguration iterieren, um den Chunk zu finden
             for (String playerName : config.getConfigurationSection("claims").getKeys(false)) {
-                String path = "claims." + playerName;
+                List<Map<?, ?>> chunkDataList = config.getMapList("claims." + playerName);
 
-                String savedWorld = config.getString(path + ".world");
-                int savedX = config.getInt(path + ".x");
-                int savedZ = config.getInt(path + ".z");
+                for (Map<?, ?> chunkData : chunkDataList) {
+                    String savedWorld = (String) chunkData.get("world");
+                    int savedX = (int) chunkData.get("x");
+                    int savedZ = (int) chunkData.get("z");
 
-                // Überprüfen, ob Welt, X und Z übereinstimmen
-                if (savedWorld.equals(worldName) && savedX == chunkX && savedZ == chunkZ) {
-                    player.sendMessage("Dieser Chunk gehört " + playerName);
+                    // Überprüfen, ob Welt, X und Z übereinstimmen
+                    if (savedWorld.equals(worldName) && savedX == chunkX && savedZ == chunkZ) {
+                        player.sendMessage("Dieser Chunk gehört " + playerName);
+                        //prüfen, ob es der eigene chunk ist
+                        // -------- TODO ------------------
+                        // anhand von Besitz gewisse aktionen verweigern.
+                        // -----------------------------------
+                        if (player.getName().equals(playerName)) {
+                            player.sendMessage("Dieser Chunk gehört dir!");
+                        } else {
+                            player.sendMessage("Dieser Chunk gehört *nicht* dir!");
+                        }
 
-                    //prüfen, ob es der eigene chunk ist
-                    // -------- TODO ------------------
-                    // anhand von Besitz gewisse aktionen verweigern.
-                    // -----------------------------------
-                    if (player.getName().equals(playerName)) {
-                        player.sendMessage("Dieser Chunk gehört dir!");
-                    } else {
-                        player.sendMessage("Dieser Chunk gehört *nicht* dir!");
+                        found = true;
+                        break; // Stoppe die Schleife, wenn der Chunk gefunden wurde
                     }
+                }
 
-                    found = true;
-                    break;
+                if (found) {
+                    break; // Stoppe die äußere Schleife, wenn der Chunk gefunden wurde
                 }
             }
 
