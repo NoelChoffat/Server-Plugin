@@ -3,6 +3,9 @@ version: '1.0-SNAPSHOT'
 main: chunkers.chunkClaim.ChunkClaim
 api-version: '1.20'
 commands:
-  test:
+  claim:
     description: "Claim a chunk of land."
-    usage: "/test"
+    usage: "/claim"
+  who:
+    description: "wem gehört der chunk?"
+    usage: "/who"
