@@ -1,4 +1,4 @@
-package ch.Coach_Steve__.commands;
+package chunkers.chunkClaim.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
