@@ -35,21 +35,47 @@ public class TestCommand implements CommandExecutor {
                 chunks = new ArrayList<>();
             }
 
-            // Füge den neuen Chunk hinzu
-            Map<String, Object> newChunk = new HashMap<>();
-            newChunk.put("world", chunk.getWorld().getName());
-            newChunk.put("x", chunk.getX());
-            newChunk.put("z", chunk.getZ());
-            chunks.add(newChunk);
-            config.set(chunkKey, chunks);
+            // Überprüfen, ob der Chunk bereits gespeichert ist
+            boolean chunkExists = false;
+            String ownerName = null; // Variable für den Namen des Besitzers
+            // Überprüfe die Chunks für alle Spieler
+            for (String owner : config.getConfigurationSection("claims").getKeys(false)) {
+                List<Map<?, ?>> ownerChunks = config.getMapList("claims." + owner);
+                for (Map<?, ?> existingChunk : ownerChunks) {
+                    String savedWorld = (String) existingChunk.get("world");
+                    int savedX = (int) existingChunk.get("x");
+                    int savedZ = (int) existingChunk.get("z");
 
-            // Speichern der Konfiguration in die Datei
-            try {
-                config.save(file);
-                player.sendMessage("Der Chunk wurde erfolgreich gespeichert.");
-            } catch (IOException e) {
-                player.sendMessage("Fehler beim Speichern der Datei.");
-                e.printStackTrace();
+                    if (savedWorld.equals(chunk.getWorld().getName()) && savedX == chunk.getX() && savedZ == chunk.getZ()) {
+                        chunkExists = true;
+                        ownerName = owner; // Setze den Namen des Besitzers
+                        break;
+                    }
+                }
+                if (chunkExists) {
+                    break; // Stoppe die äußere Schleife, wenn der Chunk gefunden wurde
+                }
+            }
+
+            if (chunkExists) {
+                player.sendMessage("Dieser Chunk ist bereits geclaimt durch " + ownerName + ".");
+            } else {
+                // Füge den neuen Chunk hinzu
+                Map<String, Object> newChunk = new HashMap<>();
+                newChunk.put("world", chunk.getWorld().getName());
+                newChunk.put("x", chunk.getX());
+                newChunk.put("z", chunk.getZ());
+                chunks.add(newChunk);
+                config.set(chunkKey, chunks);
+
+                // Speichern der Konfiguration in die Datei
+                try {
+                    config.save(file);
+                    player.sendMessage("Der Chunk wurde erfolgreich gespeichert.");
+                } catch (IOException e) {
+                    player.sendMessage("Fehler beim Speichern der Datei.");
+                    e.printStackTrace();
+                }
             }
 
             return true;
